@@ -6,8 +6,84 @@
     <title>Connexion | Admin Uni</title>
     <link rel="stylesheet" href="css/auth.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* YouTube Video Modal Styles */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .video-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .close-video {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .close-video:hover {
+            color: #ff0000;
+            background-color: unset;
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                width: 95%;
+            }
+
+            .video-iframe {
+                height: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- YouTube Video Modal -->
+    <div class="video-modal" id="video-modal">
+        <div class="video-container">
+            <button class="close-video" id="close-video">
+                <i class="fas fa-times"></i> Fermer
+            </button>
+            <iframe
+                class="video-iframe"
+                src="https://www.youtube.com/embed/SV14ZuYFDIg?si=Xwl37wG19t4nODgh"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
     <div class="login-container">
         <div class="login-box">
             <div class="login-header">
@@ -131,5 +207,34 @@
         </div>
     </div>
     <script src="js/auth.js"></script>
+    <script>
+        // YouTube video modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoModal = document.getElementById('video-modal');
+            const closeVideo = document.getElementById('close-video');
+
+            // Close video when clicking the close button
+            closeVideo.addEventListener('click', function() {
+                videoModal.style.display = 'none';
+
+                // Stop the video when closed
+                const iframe = videoModal.querySelector('iframe');
+                const iframeSrc = iframe.src;
+                iframe.src = iframeSrc;
+            });
+
+            // Close video when clicking outside the video container
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    videoModal.style.display = 'none';
+
+                    // Stop the video when closed
+                    const iframe = videoModal.querySelector('iframe');
+                    const iframeSrc = iframe.src;
+                    iframe.src = iframeSrc;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
